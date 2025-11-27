@@ -219,8 +219,8 @@
                 
                 <!-- Sight 1: Dubai City Tour ($20) -->
                 <div class="tilt-card snap-center shrink-0 w-[85vw] md:w-[350px] h-[450px] rounded-3xl relative overflow-hidden group shadow-2xl shadow-blue-900/20" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
-                    <!-- Placeholder Image for City Tour -->
-                    <img src="https://placehold.co/800x600/0f172a/FCD34D?text=DUBAI+CITY" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Dubai City Tour">
+                    <!-- REAL IMAGE: Dubai City -->
+                    <img src="https://images.unsplash.com/photo-1512453979798-5ea932a23518?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Dubai City Tour">
                     <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/60 to-transparent"></div>
                     
                     <div class="absolute bottom-0 right-0 p-6 transform translate-z-20 text-right w-full">
@@ -234,8 +234,8 @@
 
                 <!-- Sight 2: Top 3 Attractions ($75) -->
                 <div class="tilt-card snap-center shrink-0 w-[85vw] md:w-[350px] h-[450px] rounded-3xl relative overflow-hidden group shadow-2xl shadow-purple-900/20" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
-                    <!-- Placeholder Image for Attractions -->
-                    <img src="https://placehold.co/800x600/0f172a/FCD34D?text=3+ATTRACTIONS" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Top 3 Attractions">
+                    <!-- REAL IMAGE: Dubai Frame / Attractions -->
+                    <img src="https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Top 3 Attractions">
                     <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/60 to-transparent"></div>
                     
                     <div class="absolute bottom-0 right-0 p-6 transform translate-z-20 text-right w-full">
@@ -249,8 +249,8 @@
 
                 <!-- Sight 3: Safari Trip ($60) -->
                 <div class="tilt-card snap-center shrink-0 w-[85vw] md:w-[350px] h-[450px] rounded-3xl relative overflow-hidden group shadow-2xl shadow-orange-900/20" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
-                    <!-- Placeholder Image for Safari -->
-                    <img src="https://placehold.co/800x600/0f172a/FCD34D?text=SAFARI+TRIP" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Safari">
+                    <!-- REAL IMAGE: Desert Safari -->
+                    <img src="https://images.unsplash.com/photo-1451337516015-6b6fcd1c9015?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Safari">
                     <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/60 to-transparent"></div>
                     
                     <div class="absolute bottom-0 right-0 p-6 transform translate-z-20 text-right w-full">
@@ -264,8 +264,8 @@
 
                 <!-- Sight 4: Marine Trip ($75) -->
                 <div class="tilt-card snap-center shrink-0 w-[85vw] md:w-[350px] h-[450px] rounded-3xl relative overflow-hidden group shadow-2xl shadow-cyan-900/20" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
-                    <!-- Placeholder Image for Marine Trip -->
-                    <img src="https://placehold.co/800x600/0f172a/FCD34D?text=MARINE+TRIP" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Dubai Marina">
+                    <!-- REAL IMAGE: Dubai Marina -->
+                    <img src="https://images.unsplash.com/photo-1578895101408-1a36b834405b?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Dubai Marina">
                     <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/60 to-transparent"></div>
                     
                     <div class="absolute bottom-0 right-0 p-6 transform translate-z-20 text-right w-full">
@@ -279,8 +279,8 @@
 
                 <!-- Sight 5: Abu Dhabi Trip ($75) -->
                 <div class="tilt-card snap-center shrink-0 w-[85vw] md:w-[350px] h-[450px] rounded-3xl relative overflow-hidden group shadow-2xl shadow-indigo-900/20" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
-                    <!-- Placeholder Image for Abu Dhabi -->
-                    <img src="https://placehold.co/800x600/0f172a/FCD34D?text=ABU+DHABI" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Abu Dhabi">
+                    <!-- REAL IMAGE: Sheikh Zayed Mosque -->
+                    <img src="https://images.unsplash.com/photo-1546412414-e1885259563a?auto=format&fit=crop&w=800&q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Abu Dhabi">
                     <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/60 to-transparent"></div>
                     
                     <div class="absolute bottom-0 right-0 p-6 transform translate-z-20 text-right w-full">
@@ -347,42 +347,20 @@
 
         function updateScrollIcon(lang) {
             // Check if we are at the end of the scroll
-            const isEndOfScroll = scrollContainer.scrollWidth - scrollContainer.scrollLeft - scrollContainer.clientWidth < 1;
+            const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+            // In modern browsers, scrollLeft is 0 at start. RTL handling varies, but scrollBy handles it relatively.
             
+            // Simple logic: If we are not at the end, show appropriate arrow
+            // For RTL, content starts right. Next items are left.
+            // For LTR, content starts left. Next items are right.
+
             if (lang === 'ar' || lang.startsWith('ku')) {
-                // For RTL (Arabic/Kurdish), scroll direction is right-to-left
-                // Icon points right (left scroll) when at the start, and left (right scroll) otherwise.
-                scrollIcon.className = 'fa-solid text-gold-300 text-lg group-active:translate-x-1 transition-transform duration-300';
-                if (isEndOfScroll) {
-                     // If fully scrolled to the start (far right in RTL), set the arrow to point left (indicating more content to the right/start)
-                    scrollIcon.classList.add('fa-arrow-left');
-                } else {
-                    // Otherwise, set the arrow to point left (indicating more content to the right/start)
-                    scrollIcon.classList.add('fa-arrow-left');
-                }
+                // RTL Mode
+                scrollIcon.className = 'fa-solid fa-arrow-left text-gold-300 text-lg group-active:translate-x-[-4px] transition-transform duration-300';
             } else {
-                // For LTR (English), scroll direction is left-to-right
-                // Icon points right when more content is to the right.
-                scrollIcon.className = 'fa-solid text-gold-300 text-lg group-active:translate-x-1 transition-transform duration-300';
-                if (isEndOfScroll) {
-                    scrollIcon.classList.add('fa-arrow-right'); // Indicate scroll back to the left
-                } else {
-                    scrollIcon.classList.add('fa-arrow-right'); // Indicate scroll to the right
-                }
+                // LTR Mode
+                scrollIcon.className = 'fa-solid fa-arrow-right text-gold-300 text-lg group-active:translate-x-1 transition-transform duration-300';
             }
-
-             // We always point to the next logical scroll direction, which is generally towards the start of the list.
-             // Given the content is designed to be read RTL, we'll keep the arrow pointing left (or right based on the flow) to prompt movement.
-             // We'll use a fixed right arrow for LTR and left arrow for RTL to prompt the user to see the next items.
-             if (document.documentElement.dir === 'rtl') {
-                scrollIcon.classList.remove('fa-arrow-right');
-                scrollIcon.classList.add('fa-arrow-left');
-             } else {
-                scrollIcon.classList.remove('fa-arrow-left');
-                scrollIcon.classList.add('fa-arrow-right');
-             }
-
-             // Simple logic for RTL: always scroll left to view the next item
         }
 
 
@@ -393,40 +371,38 @@
             // Determine if the direction is RTL or LTR
             const isRTL = document.documentElement.dir === 'rtl';
 
-            // Calculate the width of the card and gap (85vw + 1.5rem gap)
+            // Calculate width + gap
             const cardWidth = children[0].offsetWidth;
-            const gap = 24; // Tailwind gap-6 is 1.5rem = 24px
+            const gap = 24; // Tailwind gap-6 = 1.5rem = 24px
             const scrollDistance = cardWidth + gap;
 
+            // Max scrollable area
+            const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+            
+            // Current scroll position (abs value helps handle browser RTL differences)
+            const currentScroll = Math.abs(scrollContainer.scrollLeft);
+            
+            // Tolerance to detect "end" of scroll
+            const isAtEnd = (currentScroll + 10) >= maxScrollLeft;
+
             if (isRTL) {
-                // For RTL, scrolling "left" (negative deltaX) moves us to the next item
-                const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-                let targetScrollLeft = scrollContainer.scrollLeft - scrollDistance;
-
-                // If we are near or past the start (far right), wrap around to the end (far left)
-                if (targetScrollLeft < -50) { // -50 threshold for safety margin
-                    targetScrollLeft = 0; // Go back to the end (leftmost position)
+                // In RTL, we want to move LEFT (negative X) to see next items
+                if (isAtEnd) {
+                    // Reset to start (Right side in RTL)
+                    scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    // Scroll Left
+                    scrollContainer.scrollBy({ left: -scrollDistance, behavior: 'smooth' });
                 }
-
-                scrollContainer.scrollTo({
-                    left: targetScrollLeft,
-                    behavior: 'smooth'
-                });
-
             } else {
-                // For LTR, scrolling "right" (positive deltaX) moves us to the next item
-                const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-                let targetScrollLeft = scrollContainer.scrollLeft + scrollDistance;
-
-                // If we are near or past the end, wrap around to the start (leftmost position)
-                if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= maxScrollLeft) {
-                    targetScrollLeft = 0;
+                // In LTR, we want to move RIGHT (positive X)
+                if (isAtEnd) {
+                    // Reset to start (Left side in LTR)
+                    scrollContainer.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    // Scroll Right
+                    scrollContainer.scrollBy({ left: scrollDistance, behavior: 'smooth' });
                 }
-
-                scrollContainer.scrollTo({
-                    left: targetScrollLeft,
-                    behavior: 'smooth'
-                });
             }
         }
 
@@ -443,7 +419,6 @@
                 });
             }, 800);
 
-            // Initial icon update (must be called after DOM is ready)
             updateScrollIcon(document.documentElement.lang);
         });
 
