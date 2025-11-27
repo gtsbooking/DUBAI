@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>يلا نسافر - تجربة دبي</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Kufi+Arabic:wght@300;500;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Animation Library -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        arabic: ['Noto Kufi Arabic', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            300: '#FDE68A',
+                            400: '#FCD34D',
+                            500: '#D4AF37',
+                            600: '#B8860B',
+                        },
+                        navy: {
+                            800: '#0f172a',
+                            900: '#020617',
+                            950: '#010409',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'blob': 'blob 7s infinite',
+                        'pulse-glow': 'pulse-glow 3s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { boxShadow: '0 0 15px rgba(212, 175, 55, 0.2)' },
+                            '50%': { boxShadow: '0 0 30px rgba(212, 175, 55, 0.5)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar hide */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* 3D Perspective Container */
+        .perspective-container {
+            perspective: 1000px;
+        }
+
+        /* 3D Tilt Card Base */
+        .tilt-card {
+            transition: transform 0.1s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        
+        .glass-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        /* Text Gradient */
+        .text-gradient-gold {
+            background: linear-gradient(to right, #FCD34D, #FDE68A, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Loader */
+        #loader {
+            transition: opacity 0.8s ease-out, visibility 0.8s;
+        }
+    </style>
+</head>
+<body class="bg-navy-950 text-white font-arabic antialiased overflow-x-hidden selection:bg-gold-500 selection:text-navy-900">
+
+    <!-- Animated Background -->
+    <div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-900/30 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[400px] h-[400px] bg-gold-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-blue-900/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-4000"></div>
+        <!-- Grid overlay -->
+        <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)]"></div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-navy-950">
+        <div class="relative w-24 h-24 mb-4">
+            <div class="absolute inset-0 border-4 border-gold-500/30 rounded-full"></div>
+            <div class="absolute inset-0 border-4 border-gold-400 border-t-transparent rounded-full animate-spin"></div>
+            <div class="absolute inset-0 flex items-center justify-center text-4xl animate-pulse">✈️</div>
+        </div>
+        <h2 class="text-2xl font-bold text-gradient-gold tracking-widest uppercase font-arabic">جارِ التحميل...</h2>
+    </div>
+
+    <!-- Main Content -->
+    <div class="relative z-10 pb-24">
+        
+        <!-- Navbar -->
+        <nav class="flex justify-between items-center px-6 py-8">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-400 to-gold-600 flex items-center justify-center shadow-lg shadow-gold-500/20">
+                    <span class="text-navy-900 font-bold text-xl font-sans">Y</span>
+                </div>
+                <h1 class="text-xl font-bold tracking-wider font-sans">YALA<span class="text-gold-400">NSAFER</span></h1>
+            </div>
+            
+            <button onclick="toggleLanguageMenu()" class="glass-btn w-12 h-12 rounded-full flex items-center justify-center active:scale-95 transition-all hover:bg-white/10 group">
+                <i class="fa-solid fa-globe text-gold-300 text-lg group-hover:rotate-180 transition-transform duration-500"></i>
+            </button>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="px-6 mb-12 relative">
+            <div class="absolute -left-10 top-0 w-32 h-32 bg-gold-500/10 rounded-full blur-3xl"></div>
+            
+            <div data-aos="fade-up" data-aos-duration="1000">
+                <span class="inline-block px-3 py-1 rounded-full bg-gold-500/10 border border-gold-500/20 text-gold-300 text-xs font-semibold tracking-widest mb-4">تجربة فاخرة</span>
+                <h2 id="heroTitle" class="text-5xl font-bold leading-tight mb-4">
+                    دبي <br/>
+                    <span class="text-gradient-gold">ما وراء الخيال</span>
+                </h2>
+                <p id="heroSubtitle" class="text-gray-400 text-lg max-w-sm leading-relaxed">
+                    اخطو نحو المستقبل. اختبر الكثبان الذهبية وناطحات السحاب التي تلامس الغيوم.
+                </p>
+            </div>
+        </header>
+
+        <!-- 3D Glass Buttons (PDFs) -->
+        <div class="px-6 mb-16 perspective-container" data-aos="fade-up" data-aos-delay="200">
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Arabic PDF -->
+                <a href="#" class="tilt-card group relative h-32 rounded-2xl glass-btn p-5 flex flex-col justify-between overflow-hidden cursor-pointer" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                    <div class="absolute inset-0 bg-gradient-to-br from-red-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10 transform translate-z-10 group-hover:translate-z-20 transition-transform">
+                        <i class="fa-solid fa-file-pdf text-3xl text-red-400 drop-shadow-[0_0_10px_rgba(248,113,113,0.5)]"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <span id="arabicBtn" class="text-lg font-bold block text-white">ملف PDF عربي</span>
+                        <span class="text-xs text-gray-400">تحميل الدليل</span>
+                    </div>
+                </a>
+
+                <!-- Kurdish PDF -->
+                <a href="#" class="tilt-card group relative h-32 rounded-2xl glass-btn p-5 flex flex-col justify-between overflow-hidden cursor-pointer" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10 transform translate-z-10 group-hover:translate-z-20 transition-transform">
+                        <i class="fa-solid fa-file-pdf text-3xl text-blue-400 drop-shadow-[0_0_10px_rgba(96,165,250,0.5)]"></i>
+                    </div>
+                    <div class="relative z-10">
+                        <span id="kurdishBtn" class="text-lg font-bold block text-white">ملف PDF كردي</span>
+                        <span class="text-xs text-gray-400">تحميل الدليل</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- Sights Showcase (Horizontal 3D Scroll) -->
+        <div class="space-y-8">
+            <div class="px-6 flex items-end justify-between" data-aos="fade-right">
+                <div>
+                    <h3 id="sightsTitle" class="text-2xl font-bold text-white">الرحلات المميزة</h3>
+                    <div class="h-1 w-12 bg-gold-500 mt-2 rounded-full"></div>
+                </div>
+                <!-- Scroll button -->
+                <button onclick="scrollTrips()" id="scrollButton" class="glass-btn w-12 h-12 rounded-full flex items-center justify-center active:scale-95 transition-all hover:bg-gold-500/10 group shadow-lg shadow-gold-500/20">
+                    <i id="scrollIcon" class="fa-solid fa-arrow-left text-gold-300 text-lg group-active:translate-x-1 transition-transform duration-300"></i>
+                </button>
+            </div>
+
+            <!-- Horizontal Scroll Container -->
+            <div id="tripsContainer" class="overflow-x-auto no-scrollbar pb-12 px-6 flex gap-6 snap-x snap-mandatory perspective-container">
+                
+                <!-- Sight 1: Dubai City Tour ($20) -->
+                <div class="tilt-card snap-center shrink-0 w-[85vw] md:w-[350px] h-[450px] rounded-3xl relative overflow-hidden group shadow-2xl shadow-blue-900/20" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                    <!-- Placeholder Image for City Tour -->
+                    <img src="https://placehold.co/800x600/0f172a/FCD34D?text=DUBAI+CITY" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Dubai City Tour">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/60 to-transparent"></div>
+                    
+                    <div class="absolute bottom-0 right-0 p-6 transform translate-z-20 text-right w-full">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="inline-block px-2 py-1 bg-gold-500/20 backdrop-blur-md rounded-md text-xs font-bold text-gold-300 border border-gold-500/20">20$</span>
+                        </div>
+                        <h4 id="sight1Title" class="text-2xl font-bold mb-2">جولة في دبي</h4>
+                        <p id="sight1Desc" class="text-gray-300 text-sm line-clamp-3">شارع الشيخ زايد، سوق جميرا، النخيل مول.</p>
+                    </div>
+                </div>
+
+                <!-- Sight 2: Top 3 Attractions ($75) -->
+                <div class="tilt-card snap-center shrink-0 w-[85vw] md:w-[350px] h-[450px] rounded-3xl relative overflow-hidden group shadow-2xl shadow-purple-900/20" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                    <!-- Placeholder Image for Attractions -->
+                    <img src="https://placehold.co/800x600/0f172a/FCD34D?text=3+ATTRACTIONS" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Top 3 Attractions">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/60 to-transparent"></div>
+                    
+                    <div class="absolute bottom-0 right-0 p-6 transform translate-z-20 text-right w-full">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="inline-block px-2 py-1 bg-gold-500/20 backdrop-blur-md rounded-md text-xs font-bold text-gold-300 border border-gold-500/20">75$</span>
+                        </div>
+                        <h4 id="sight2Title" class="text-2xl font-bold mb-2">أهم 3 معالم سياحية</h4>
+                        <p id="sight2Desc" class="text-gray-300 text-sm line-clamp-3">برواز دبي، القرية العالمية، الحديقة المعجزة.</p>
+                    </div>
+                </div>
+
+                <!-- Sight 3: Safari Trip ($60) -->
+                <div class="tilt-card snap-center shrink-0 w-[85vw] md:w-[350px] h-[450px] rounded-3xl relative overflow-hidden group shadow-2xl shadow-orange-900/20" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                    <!-- Placeholder Image for Safari -->
+                    <img src="https://placehold.co/800x600/0f172a/FCD34D?text=SAFARI+TRIP" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Safari">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/60 to-transparent"></div>
+                    
+                    <div class="absolute bottom-0 right-0 p-6 transform translate-z-20 text-right w-full">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="inline-block px-2 py-1 bg-gold-500/20 backdrop-blur-md rounded-md text-xs font-bold text-gold-300 border border-gold-500/20">60$</span>
+                        </div>
+                        <h4 id="sight3Title" class="text-2xl font-bold mb-2">رحلة سفاري</h4>
+                        <p id="sight3Desc" class="text-gray-300 text-sm line-clamp-3">سفاري الصحراء، صعود الجمال، والسهرة الفنية.</p>
+                    </div>
+                </div>
+
+                <!-- Sight 4: Marine Trip ($75) -->
+                <div class="tilt-card snap-center shrink-0 w-[85vw] md:w-[350px] h-[450px] rounded-3xl relative overflow-hidden group shadow-2xl shadow-cyan-900/20" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                    <!-- Placeholder Image for Marine Trip -->
+                    <img src="https://placehold.co/800x600/0f172a/FCD34D?text=MARINE+TRIP" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Dubai Marina">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/60 to-transparent"></div>
+                    
+                    <div class="absolute bottom-0 right-0 p-6 transform translate-z-20 text-right w-full">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="inline-block px-2 py-1 bg-gold-500/20 backdrop-blur-md rounded-md text-xs font-bold text-gold-300 border border-gold-500/20">75$</span>
+                        </div>
+                        <h4 id="sight4Title" class="text-2xl font-bold mb-2">الرحلة البحرية</h4>
+                        <p id="sight4Desc" class="text-gray-300 text-sm line-clamp-3">صعود على متن القارب التراثي، جولة في البحر وأماكن المارينا.</p>
+                    </div>
+                </div>
+
+                <!-- Sight 5: Abu Dhabi Trip ($75) -->
+                <div class="tilt-card snap-center shrink-0 w-[85vw] md:w-[350px] h-[450px] rounded-3xl relative overflow-hidden group shadow-2xl shadow-indigo-900/20" onmousemove="handleTilt(event, this)" onmouseleave="resetTilt(this)">
+                    <!-- Placeholder Image for Abu Dhabi -->
+                    <img src="https://placehold.co/800x600/0f172a/FCD34D?text=ABU+DHABI" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" alt="Abu Dhabi">
+                    <div class="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/60 to-transparent"></div>
+                    
+                    <div class="absolute bottom-0 right-0 p-6 transform translate-z-20 text-right w-full">
+                        <div class="flex justify-between items-end mb-2">
+                            <span class="inline-block px-2 py-1 bg-gold-500/20 backdrop-blur-md rounded-md text-xs font-bold text-gold-300 border border-gold-500/20">75$</span>
+                        </div>
+                        <h4 id="sight5Title" class="text-2xl font-bold mb-2">رحلة أبوظبي</h4>
+                        <p id="sight5Desc" class="text-gray-300 text-sm line-clamp-3">الكورنيش، شاطئ الكاسر، قصر الوطن، ياس مول، عالم فيراري.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Language Selector Bottom Sheet -->
+    <div id="languageModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300">
+        <div class="absolute inset-0 bg-navy-950/90 backdrop-blur-md" onclick="toggleLanguageMenu()"></div>
+        <div class="absolute bottom-0 left-0 right-0 bg-navy-900 rounded-t-[2.5rem] border-t border-white/10 p-8 transform translate-y-full transition-transform duration-500 ease-out" id="languageSheet">
+            <div class="w-16 h-1.5 bg-gray-700 rounded-full mx-auto mb-8"></div>
+            <h3 class="text-2xl font-bold mb-6 text-center text-white">اختر اللغة</h3>
+            <div class="grid gap-4">
+                <button onclick="setLanguage('en')" class="glass-btn p-4 rounded-2xl hover:border-gold-500/50 flex items-center gap-4 transition-all">
+                    <span class="text-3xl">🇺🇸</span> <span class="font-semibold text-lg">English</span>
+                </button>
+                <button onclick="setLanguage('ar')" class="glass-btn p-4 rounded-2xl hover:border-gold-500/50 flex items-center gap-4 transition-all font-arabic">
+                    <span class="text-3xl">🇦🇪</span> <span class="font-semibold text-lg">العربية (Arabic)</span>
+                </button>
+                <button onclick="setLanguage('ku-badini')" class="glass-btn p-4 rounded-2xl hover:border-gold-500/50 flex items-center gap-4 transition-all font-arabic">
+                    <span class="text-3xl">☀️</span> <span class="font-semibold text-lg">کوردی - بادینی</span>
+                </button>
+                <button onclick="setLanguage('ku-sorani')" class="glass-btn p-4 rounded-2xl hover:border-gold-500/50 flex items-center gap-4 transition-all font-arabic">
+                    <span class="text-3xl">☀️</span> <span class="font-semibold text-lg">کوردی - سۆرانی</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 3D Tilt Logic ---
+        function handleTilt(e, card) {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        }
+
+        function resetTilt(card) {
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)`;
+        }
+
+        // --- Horizontal Scrolling Fix ---
+        let currentScrollIndex = 0;
+        const scrollContainer = document.getElementById('tripsContainer');
+        const scrollIcon = document.getElementById('scrollIcon');
+
+        function updateScrollIcon(lang) {
+            // Check if we are at the end of the scroll
+            const isEndOfScroll = scrollContainer.scrollWidth - scrollContainer.scrollLeft - scrollContainer.clientWidth < 1;
+            
+            if (lang === 'ar' || lang.startsWith('ku')) {
+                // For RTL (Arabic/Kurdish), scroll direction is right-to-left
+                // Icon points right (left scroll) when at the start, and left (right scroll) otherwise.
+                scrollIcon.className = 'fa-solid text-gold-300 text-lg group-active:translate-x-1 transition-transform duration-300';
+                if (isEndOfScroll) {
+                     // If fully scrolled to the start (far right in RTL), set the arrow to point left (indicating more content to the right/start)
+                    scrollIcon.classList.add('fa-arrow-left');
+                } else {
+                    // Otherwise, set the arrow to point left (indicating more content to the right/start)
+                    scrollIcon.classList.add('fa-arrow-left');
+                }
+            } else {
+                // For LTR (English), scroll direction is left-to-right
+                // Icon points right when more content is to the right.
+                scrollIcon.className = 'fa-solid text-gold-300 text-lg group-active:translate-x-1 transition-transform duration-300';
+                if (isEndOfScroll) {
+                    scrollIcon.classList.add('fa-arrow-right'); // Indicate scroll back to the left
+                } else {
+                    scrollIcon.classList.add('fa-arrow-right'); // Indicate scroll to the right
+                }
+            }
+
+             // We always point to the next logical scroll direction, which is generally towards the start of the list.
+             // Given the content is designed to be read RTL, we'll keep the arrow pointing left (or right based on the flow) to prompt movement.
+             // We'll use a fixed right arrow for LTR and left arrow for RTL to prompt the user to see the next items.
+             if (document.documentElement.dir === 'rtl') {
+                scrollIcon.classList.remove('fa-arrow-right');
+                scrollIcon.classList.add('fa-arrow-left');
+             } else {
+                scrollIcon.classList.remove('fa-arrow-left');
+                scrollIcon.classList.add('fa-arrow-right');
+             }
+
+             // Simple logic for RTL: always scroll left to view the next item
+        }
+
+
+        function scrollTrips() {
+            const children = scrollContainer.children;
+            if (children.length === 0) return;
+
+            // Determine if the direction is RTL or LTR
+            const isRTL = document.documentElement.dir === 'rtl';
+
+            // Calculate the width of the card and gap (85vw + 1.5rem gap)
+            const cardWidth = children[0].offsetWidth;
+            const gap = 24; // Tailwind gap-6 is 1.5rem = 24px
+            const scrollDistance = cardWidth + gap;
+
+            if (isRTL) {
+                // For RTL, scrolling "left" (negative deltaX) moves us to the next item
+                const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+                let targetScrollLeft = scrollContainer.scrollLeft - scrollDistance;
+
+                // If we are near or past the start (far right), wrap around to the end (far left)
+                if (targetScrollLeft < -50) { // -50 threshold for safety margin
+                    targetScrollLeft = 0; // Go back to the end (leftmost position)
+                }
+
+                scrollContainer.scrollTo({
+                    left: targetScrollLeft,
+                    behavior: 'smooth'
+                });
+
+            } else {
+                // For LTR, scrolling "right" (positive deltaX) moves us to the next item
+                const maxScrollLeft = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+                let targetScrollLeft = scrollContainer.scrollLeft + scrollDistance;
+
+                // If we are near or past the end, wrap around to the start (leftmost position)
+                if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= maxScrollLeft) {
+                    targetScrollLeft = 0;
+                }
+
+                scrollContainer.scrollTo({
+                    left: targetScrollLeft,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
+        // --- Init Animations ---
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            loader.style.opacity = '0';
+            setTimeout(() => {
+                loader.style.visibility = 'hidden';
+                AOS.init({
+                    duration: 1000,
+                    once: true,
+                    offset: 30
+                });
+            }, 800);
+
+            // Initial icon update (must be called after DOM is ready)
+            updateScrollIcon(document.documentElement.lang);
+        });
+
+        // --- Translations ---
+        const translations = {
+            en: {
+                heroTitle: "Dubai <br/><span class='text-gradient-gold'>Beyond Reality</span>",
+                heroSubtitle: "Step into the future. Experience the golden dunes and the skyscrapers that touch the clouds.",
+                sightsTitle: "Featured Trips",
+                arabicBtn: "Arabic PDF",
+                kurdishBtn: "Kurdish PDF",
+                sight1Title: "Dubai City Tour",
+                sight1Desc: "Sheikh Zayed Rd, Souk Madinat Jumeirah, Nakheel Mall.",
+                sight2Title: "Top 3 Attractions",
+                sight2Desc: "Dubai Frame, Global Village, Miracle Garden.",
+                sight3Title: "Safari Trip",
+                sight3Desc: "Desert Safari, Camel Riding, Artistic Evening.",
+                sight4Title: "Marine Trip",
+                sight4Desc: "Heritage Boat Ride, Sea Tour, Marina Walk.",
+                sight5Title: "Abu Dhabi Trip",
+                sight5Desc: "Corniche, Al Kasir Beach, Qasr Al Watan, Yas Mall, Ferrari World."
+            },
+            ar: {
+                heroTitle: "دبي <br/><span class='text-gradient-gold'>ما وراء الخيال</span>",
+                heroSubtitle: "اخطو نحو المستقبل. اختبر الكثبان الذهبية وناطحات السحاب التي تلامس الغيوم.",
+                sightsTitle: "الرحلات المميزة",
+                arabicBtn: "ملف PDF عربي",
+                kurdishBtn: "ملف PDF كردي",
+                sight1Title: "جولة في دبي",
+                sight1Desc: "شارع الشيخ زايد، سوق جميرا، النخيل مول.",
+                sight2Title: "أهم 3 معالم سياحية",
+                sight2Desc: "برواز دبي، القرية العالمية، الحديقة المعجزة.",
+                sight3Title: "رحلة سفاري",
+                sight3Desc: "سفاري الصحراء، صعود الجمال، والسهرة الفنية.",
+                sight4Title: "الرحلة البحرية",
+                sight4Desc: "صعود على متن القارب التراثي، جولة في البحر وأماكن المارينا.",
+                sight5Title: "رحلة أبوظبي",
+                sight5Desc: "الكورنيش، شاطئ الكاسر، قصر الوطن، ياس مول، عالم فيراري."
+            },
+            "ku-badini": {
+                heroTitle: "دوبەی <br/><span class='text-gradient-gold'>ل دەرڤەی خەیالێ</span>",
+                heroSubtitle: "بەرەڤ پاشەڕۆژێ ڤە بچە. ئەزموونا گردێن زێڕین و ئەو باڵەخانێن عەورا ماچ دکەن.",
+                sightsTitle: "گەشتێن تایبەت",
+                arabicBtn: "PDF عەرەبی",
+                kurdishBtn: "PDF کوردی",
+                sight1Title: "گەشتا ناڤ دوبەی",
+                sight1Desc: "جادەیا شێخ زاید، بازاڕێ جومێرا، نەخیل مۆل.",
+                sight2Title: "٣ جھێن گەشتیاری",
+                sight2Desc: "بەروزا دوبەی، گوندێ جیهانی، باخچەیا موعجیزە.",
+                sight3Title: "گەشتا سەفاری",
+                sight3Desc: "سەفاری، سواربوونا ئوشترا، شەڤئاھەنگا ھونەری.",
+                sight4Title: "گەشتا دەریایی",
+                sight4Desc: "سواربوون ل بەلەمێ کەڤنار، گەریان ل دەریایێ و جھێن مارینا.",
+                sight5Title: "گەشتا ئەبوزەبی",
+                sight5Desc: "کۆرنیش، کەنارێ کاسر، کۆشکا وەتەن، یاس مۆل، جیهانا فێراری."
+            },
+            "ku-sorani": {
+                heroTitle: "دوبەی <br/><span class='text-gradient-gold'>لە دەرەوەی خەیاڵ</span>",
+                heroSubtitle: "هەنگاو بنێ بەرەو دواڕۆژ. ئەزموونی گردە زێڕینەکان و ئەو باڵەخانانەی کە هەورەکان ماچ دەکەن.",
+                sightsTitle: "گەشتە تایبەتەکان",
+                arabicBtn: "PDF عەرەبی",
+                kurdishBtn: "PDF کوردی",
+                sight1Title: "گەشتی ناو دوبەی",
+                sight1Desc: "شەقامی شێخ زاید، بازاڕی جومێرا، نەخیل مۆڵ.",
+                sight2Title: "٣ شوێنی گەشتیاری",
+                sight2Desc: "برواز دوبەی، گوندی جیهانی، باخچەی موعجیزە.",
+                sight3Title: "گەشتی سەفاری",
+                sight3Desc: "سەفاری، سواربوونی وشتر، شەوئاهەنگی هونەری.",
+                sight4Title: "گەشتی دەریایی",
+                sight4Desc: "سواربوون لە بەلەمی کەلەپووری، گەڕان لە دەریا و شوێنەکانی مارینا.",
+                sight5Title: "گەشتی ئەبوزەبی",
+                sight5Desc: "کۆرنیش، کەناری کاسر، کۆشکی وەتەن، یاس مۆڵ، جیهانی فێراری."
+            }
+        };
+
+        // --- UI Logic ---
+        const modal = document.getElementById('languageModal');
+        const sheet = document.getElementById('languageSheet');
+        const html = document.documentElement;
+
+        function toggleLanguageMenu() {
+            const isHidden = modal.style.visibility === 'hidden' || modal.style.visibility === '';
+            
+            if (isHidden) {
+                modal.style.visibility = 'visible';
+                modal.style.opacity = '1';
+                setTimeout(() => {
+                    sheet.style.transform = 'translateY(0)';
+                }, 10);
+            } else {
+                sheet.style.transform = 'translateY(100%)';
+                setTimeout(() => {
+                    modal.style.opacity = '0';
+                    modal.style.visibility = 'hidden';
+                }, 300);
+            }
+        }
+
+        function setLanguage(lang) {
+            const t = translations[lang];
+            
+            // Text Updates
+            document.getElementById('heroTitle').innerHTML = t.heroTitle;
+            document.getElementById('heroSubtitle').textContent = t.heroSubtitle;
+            document.getElementById('sightsTitle').textContent = t.sightsTitle;
+            document.getElementById('arabicBtn').textContent = t.arabicBtn;
+            document.getElementById('kurdishBtn').textContent = t.kurdishBtn;
+            
+            document.getElementById('sight1Title').textContent = t.sight1Title;
+            document.getElementById('sight1Desc').textContent = t.sight1Desc;
+            document.getElementById('sight2Title').textContent = t.sight2Title;
+            document.getElementById('sight2Desc').textContent = t.sight2Desc;
+            document.getElementById('sight3Title').textContent = t.sight3Title;
+            document.getElementById('sight3Desc').textContent = t.sight3Desc;
+            document.getElementById('sight4Title').textContent = t.sight4Title;
+            document.getElementById('sight4Desc').textContent = t.sight4Desc;
+            document.getElementById('sight5Title').textContent = t.sight5Title;
+            document.getElementById('sight5Desc').textContent = t.sight5Desc;
+
+            // Direction & Fonts
+            if (lang === 'ar' || lang.startsWith('ku')) {
+                html.dir = 'rtl';
+                html.lang = lang;
+                document.body.classList.add('font-arabic');
+                document.body.classList.remove('font-sans');
+            } else {
+                html.dir = 'ltr';
+                html.lang = lang;
+                document.body.classList.add('font-sans');
+                document.body.classList.remove('font-arabic');
+            }
+
+            // Update scroll icon orientation after setting direction
+            updateScrollIcon(lang);
+
+            toggleLanguageMenu();
+        }
+    </script>
+</body>
+</html>
