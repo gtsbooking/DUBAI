@@ -195,7 +195,7 @@
             height: auto;
             filter: brightness(1.3) drop-shadow(0 0 40px rgba(255, 255, 255, 0.6));
             pointer-events: none;
-            z-index: 15;
+            z-index: 10;
             animation: smooth-levitate 10s ease-in-out infinite;
         }
 
@@ -204,7 +204,6 @@
             position: fixed;
             pointer-events: none;
             opacity: 0.4;
-            z-index: 10; /* Default z-index */
         }
 
         .cloud::before,
@@ -256,14 +255,14 @@
             right: 20px;
         }
 
-        /* Clouds behind plane (z-index < 15) */
+        /* Clouds behind plane */
         .cloud-1, .cloud-3, .cloud-5, .cloud-7 {
-            z-index: 10; /* Behind plane */
+            z-index: 5; /* Behind plane */
         }
 
-        /* Clouds in front of plane (z-index > 15) */
+        /* Clouds in front of plane but behind main content */
         .cloud-2, .cloud-4, .cloud-6, .cloud-8 {
-            z-index: 20; /* In front of plane */
+            z-index: 15; /* In front of plane but behind main content */
         }
 
         /* Cloud 1 - Behind Plane - Faster animation */
@@ -622,57 +621,57 @@
         </div>
     </div>
 
-    <!-- CSS-Generated Clouds with depth effect - Moved outside scrollable container -->
-    <!-- Cloud 1 - Behind Plane - Faster animation -->
+    <!-- Clouds placed directly in body without container - This allows proper z-index stacking -->
+    <!-- Cloud 1 - Behind Plane -->
     <div class="cloud cloud-1">
         <span></span>
         <span></span>
         <span></span>
     </div>
     
-    <!-- Cloud 2 - In Front of Plane - Faster animation -->
+    <!-- Cloud 2 - In Front of Plane -->
     <div class="cloud cloud-2">
         <span></span>
         <span></span>
         <span></span>
     </div>
     
-    <!-- Cloud 3 - Behind Plane - Faster animation -->
+    <!-- Cloud 3 - Behind Plane -->
     <div class="cloud cloud-3">
         <span></span>
         <span></span>
         <span></span>
     </div>
     
-    <!-- Cloud 4 - In Front of Plane - Faster animation -->
+    <!-- Cloud 4 - In Front of Plane -->
     <div class="cloud cloud-4">
         <span></span>
         <span></span>
         <span></span>
     </div>
     
-    <!-- Cloud 5 - Behind Plane - Faster animation -->
+    <!-- Cloud 5 - Behind Plane -->
     <div class="cloud cloud-5">
         <span></span>
         <span></span>
         <span></span>
     </div>
     
-    <!-- Cloud 6 - In Front of Plane - Faster animation -->
+    <!-- Cloud 6 - In Front of Plane -->
     <div class="cloud cloud-6">
         <span></span>
         <span></span>
         <span></span>
     </div>
     
-    <!-- Cloud 7 - Behind Plane - Faster animation -->
+    <!-- Cloud 7 - Behind Plane -->
     <div class="cloud cloud-7">
         <span></span>
         <span></span>
         <span></span>
     </div>
     
-    <!-- Cloud 8 - In Front of Plane - Faster animation -->
+    <!-- Cloud 8 - In Front of Plane -->
     <div class="cloud cloud-8">
         <span></span>
         <span></span>
