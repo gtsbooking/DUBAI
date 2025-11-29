@@ -188,34 +188,23 @@
 
         /* Levitating Plane - Made bigger and moved up - Fixed positioning with iOS fix */
         .levitating-plane {
-            position: fixed; /* Keep as fixed to viewport */
-            top: 25%; /* Moved up from 35% to 25% */
+            position: fixed;
+            top: 25%;
             left: 50%;
-            width: 350px; /* Made bigger from 300px to 350px */
+            width: 350px;
             height: auto;
             filter: brightness(1.3) drop-shadow(0 0 40px rgba(255, 255, 255, 0.6));
             pointer-events: none;
-            z-index: 15; /* Middle layer - between clouds */
+            z-index: 15;
             animation: smooth-levitate 10s ease-in-out infinite;
-            /* iOS fix - ensure it stays fixed */
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            will-change: transform; /* Optimize for animation */
         }
 
-        /* CSS Clouds - Different z-index for depth effect - Fixed positioning */
+        /* CSS Clouds - Different z-index for depth effect - Fixed positioning with iOS fix */
         .cloud {
-            position: fixed; /* Keep as fixed to viewport */
+            position: fixed;
             pointer-events: none;
-            opacity: 0.4; /* 40% opacity */
-            /* iOS fix - ensure they stay fixed */
-            -webkit-transform: translateZ(0);
-            transform: translateZ(0);
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            will-change: transform; /* Optimize for animation */
+            opacity: 0.4;
+            z-index: 10; /* Default z-index */
         }
 
         .cloud::before,
@@ -283,7 +272,7 @@
             height: 40px;
             top: 20%;
             left: -200px;
-            animation: cloud-drift-right 15s linear infinite; /* Reduced from 35s to 15s */
+            animation: cloud-drift-right 15s linear infinite;
         }
 
         /* Cloud 2 - In Front of Plane - Faster animation */
@@ -292,8 +281,8 @@
             height: 35px;
             top: 40%;
             left: -180px;
-            animation: cloud-drift-right 18s linear infinite; /* Reduced from 40s to 18s */
-            animation-delay: 2s; /* Reduced from 5s to 2s */
+            animation: cloud-drift-right 18s linear infinite;
+            animation-delay: 2s;
         }
 
         /* Cloud 3 - Behind Plane - Faster animation */
@@ -302,8 +291,8 @@
             height: 45px;
             top: 10%;
             left: -220px;
-            animation: cloud-drift-right 20s linear infinite; /* Reduced from 45s to 20s */
-            animation-delay: 4s; /* Reduced from 10s to 4s */
+            animation: cloud-drift-right 20s linear infinite;
+            animation-delay: 4s;
         }
 
         /* Cloud 4 - In Front of Plane - Faster animation */
@@ -312,8 +301,8 @@
             height: 40px;
             top: 50%;
             left: -190px;
-            animation: cloud-drift-right 16s linear infinite; /* Reduced from 38s to 16s */
-            animation-delay: 6s; /* Reduced from 15s to 6s */
+            animation: cloud-drift-right 16s linear infinite;
+            animation-delay: 6s;
         }
 
         /* Cloud 5 - Behind Plane - Faster animation */
@@ -322,8 +311,8 @@
             height: 30px;
             top: 30%;
             left: -200px;
-            animation: cloud-drift-right 12s linear infinite; /* Reduced from 30s to 12s */
-            animation-delay: 8s; /* Reduced from 20s to 8s */
+            animation: cloud-drift-right 12s linear infinite;
+            animation-delay: 8s;
         }
 
         /* Cloud 6 - In Front of Plane - Faster animation */
@@ -332,8 +321,8 @@
             height: 35px;
             top: 25%;
             left: -210px;
-            animation: cloud-drift-right 14s linear infinite; /* Reduced from 42s to 14s */
-            animation-delay: 3s; /* Reduced from 8s to 3s */
+            animation: cloud-drift-right 14s linear infinite;
+            animation-delay: 3s;
         }
 
         /* Cloud 7 - Behind Plane - Faster animation */
@@ -342,8 +331,8 @@
             height: 50px;
             top: 15%;
             left: -230px;
-            animation: cloud-drift-right 22s linear infinite; /* Reduced from 50s to 22s */
-            animation-delay: 10s; /* Reduced from 25s to 10s */
+            animation: cloud-drift-right 22s linear infinite;
+            animation-delay: 10s;
         }
 
         /* Cloud 8 - In Front of Plane - Faster animation */
@@ -352,8 +341,8 @@
             height: 25px;
             top: 8%;
             left: -180px;
-            animation: cloud-drift-right 10s linear infinite; /* Reduced from 32s to 10s */
-            animation-delay: 12s; /* Reduced from 30s to 12s */
+            animation: cloud-drift-right 10s linear infinite;
+            animation-delay: 12s;
         }
 
         /* Cloud animations - Faster appearance */
@@ -875,13 +864,13 @@
                 arabicBtn: "PDF عەرەبی",
                 kurdishBtn: "PDF کوردی",
                 sight1Title: "گەشتی ناو دوبەی",
-                sight1Desc: "شەقامی شێخ زاید، بازاڕی جومێرا، نەخیل مۆڵ.",
+                sight1Desc: "شەقامی شێخ زاید، بازاڕێ جومێرا، نەخیل مۆڵ.",
                 sight2Title: "٣ شوێنی گەشتیاری",
                 sight2Desc: "برواز دوبەی، گوندی جیهانی، باخچەی موعجیزە.",
                 sight3Title: "گەشتی سەفاری",
                 sight3Desc: "سەفاری، سواربوونی وشتر، شەوئاهەنگی هونەری.",
                 sight4Title: "گەشتی دەریایی",
-                sight4Desc: "سواربوون لە بەلەمی کەلەپووری، گەڕان لە دەریا و شوێنەکانی مارینا.",
+                sight4Desc: "سواربوون لە بەلەمی کەلەپووری، گەڕان ل دەریایێ و شوێنەکانی مارینا.",
                 sight5Title: "گەشتی ئەبوزەبی",
                 sight5Desc: "کۆرنیش، کەناری کاسر، کۆشکی وەتەن، یاس مۆڵ، جیهانی فێراری."
             }
