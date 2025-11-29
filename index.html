@@ -356,39 +356,26 @@
             100% { transform: translate(-50%, -50%) translateY(0px) rotateZ(0deg) scale(1); }
         }
         
-        /* MOBILE FIXES: This is the new section to fix the text issues */
-        @media (max-width: 768px) {
-            /* Add padding to the main container to prevent text from touching screen edges */
-            #scrollable-container {
-                padding: 0 1rem; /* 16px padding on left and right */
+        /* AGGRESSIVE MOBILE FIXES */
+        @media (max-width: 640px) {
+            /* Ensure all main content sections have enough padding */
+            nav, header, .relative.z-20 > div {
+                padding-left: 1.5rem !important; /* 24px */
+                padding-right: 1.5rem !important; /* 24px */
             }
 
-            /* Ensure text elements don't get clipped */
-            h1, h2, h3, h4, p, span, div {
-                /* Remove any transform that might cause clipping on mobile */
-                transform: none !important;
-            }
-
-            /* Adjust card sizes and padding for smaller screens */
+            /* Adjust the horizontal scroll container */
             #tripsContainer {
-                padding: 0 0 1rem 0; /* Only bottom padding */
+                padding-left: 1.5rem !important; /* 24px */
+                padding-right: 0.5rem !important; /* Less padding on the right to see more of the next card */
             }
+
+            /* Make cards fit perfectly within the padded container */
             #tripsContainer .tilt-card {
-                width: calc(100vw - 2rem) !important; /* Full width minus padding */
+                width: calc(100vw - 4rem) !important; /* 100% width minus padding on both sides */
                 max-width: 350px;
             }
-            #tripsContainer .tilt-card .absolute.bottom-0 {
-                padding: 1.5rem !important; /* Increase padding inside cards */
-            }
             
-            /* Adjust other sections for better spacing */
-            nav {
-                padding: 1rem 1rem !important;
-            }
-            header {
-                padding: 0 0 1rem 0 !important;
-            }
-
             /* Make the plane smaller on mobile */
             .levitating-plane {
                 width: 250px;
