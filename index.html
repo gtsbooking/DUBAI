@@ -111,6 +111,16 @@
                 bottom: 0;
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
+                /* Fix text movement issue on iOS */
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+                will-change: transform;
+            }
+            
+            /* Ensure text content stays fixed */
+            #scrollable-container * {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
             }
         }
         
@@ -187,7 +197,7 @@
             position: fixed;
             pointer-events: none;
             z-index: 5;
-            opacity: 0.7;
+            opacity: 0.4; /* Changed from 0.7 to 0.4 (40%) */
         }
 
         .cloud::before,
@@ -325,10 +335,10 @@
                 opacity: 0; 
             }
             10% { 
-                opacity: 0.6; 
+                opacity: 0.4; /* Changed from 0.6 to 0.4 */
             }
             90% { 
-                opacity: 0.7; 
+                opacity: 0.4; /* Changed from 0.7 to 0.4 */
             }
             100% { 
                 transform: translateX(calc(100vw + 100px)); 
@@ -642,24 +652,6 @@
             </div>
 
         </div>
-
-        <!-- Footer with Ahmed's name with gold glow effect -->
-        <footer class="relative z-20 py-8 text-center">
-            <div class="glass mx-auto max-w-md rounded-2xl p-6 border border-gold-500/20 shadow-lg shadow-gold-500/10">
-                <div class="flex flex-col items-center justify-center">
-                    <div class="mb-2">
-                        <i class="fas fa-star text-gold-400 text-2xl animate-pulse"></i>
-                    </div>
-                    <p class="gold-glow-text text-xl font-bold font-arabic mb-2">صمم بكل حب من قبل أحمد</p>
-                    <p class="text-gold-300 text-sm">Designed with love by Ahmed</p>
-                    <div class="mt-3 flex space-x-2">
-                        <div class="w-2 h-2 bg-gold-400 rounded-full animate-pulse"></div>
-                        <div class="w-2 h-2 bg-gold-400 rounded-full animate-pulse animation-delay-200"></div>
-                        <div class="w-2 h-2 bg-gold-400 rounded-full animate-pulse animation-delay-400"></div>
-                    </div>
-                </div>
-            </div>
-        </footer>
 
         <!-- Language Selector Bottom Sheet -->
         <div id="languageModal" class="fixed inset-0 z-50 invisible opacity-0 transition-all duration-300">
