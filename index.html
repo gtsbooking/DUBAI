@@ -186,9 +186,9 @@
             transition: opacity 0.8s ease-out, visibility 0.8s;
         }
 
-        /* Levitating Plane - Made bigger and moved up */
+        /* Levitating Plane - Made bigger and moved up - Fixed positioning */
         .levitating-plane {
-            position: fixed;
+            position: fixed; /* Keep as fixed to viewport */
             top: 25%; /* Moved up from 35% to 25% */
             left: 50%;
             width: 350px; /* Made bigger from 300px to 350px */
@@ -197,13 +197,23 @@
             pointer-events: none;
             z-index: 15; /* Middle layer - between clouds */
             animation: smooth-levitate 10s ease-in-out infinite;
+            /* iOS fix - ensure it stays fixed */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
-        /* CSS Clouds - Different z-index for depth effect */
+        /* CSS Clouds - Different z-index for depth effect - Fixed positioning */
         .cloud {
-            position: fixed;
+            position: fixed; /* Keep as fixed to viewport */
             pointer-events: none;
             opacity: 0.4; /* 40% opacity */
+            /* iOS fix - ensure they stay fixed */
+            -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
 
         .cloud::before,
@@ -438,78 +448,6 @@
             <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_80%_80%_at_50%_50%,#000_20%,transparent_100%)]"></div>
         </div>
 
-        <!-- CSS-Generated Clouds with depth effect -->
-        <!-- Cloud 1 - Behind Plane -->
-        <div class="cloud cloud-1">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        
-        <!-- Cloud 2 - In Front of Plane -->
-        <div class="cloud cloud-2">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        
-        <!-- Cloud 3 - Behind Plane -->
-        <div class="cloud cloud-3">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        
-        <!-- Cloud 4 - In Front of Plane -->
-        <div class="cloud cloud-4">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        
-        <!-- Cloud 5 - Behind Plane -->
-        <div class="cloud cloud-5">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        
-        <!-- Cloud 6 - In Front of Plane -->
-        <div class="cloud cloud-6">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        
-        <!-- Cloud 7 - Behind Plane -->
-        <div class="cloud cloud-7">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        
-        <!-- Cloud 8 - In Front of Plane -->
-        <div class="cloud cloud-8">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-
-        <!-- LEVITATING PLANE - Made bigger and moved up -->
-        <img src="https://z-cdn-media.chatglm.cn/files/b8f47e90-fe3f-4648-aa8b-35173bb942eb_Plane.png?auth_key=1864247545-e389d85ea79d4bc89cef42a85926e813-0-dab72277c690cebbfcd874a93f59d2d6" 
-             class="levitating-plane" 
-             alt="Levitating Plane">
-
-        <!-- Loading Screen -->
-        <div id="loader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-navy-950">
-            <div class="relative w-24 h-24 mb-4">
-                <div class="absolute inset-0 border-4 border-gold-500/30 rounded-full"></div>
-                <div class="absolute inset-0 border-4 border-gold-400 border-t-transparent rounded-full animate-spin"></div>
-                <div class="absolute inset-0 flex items-center justify-center text-4xl animate-pulse">✈️</div>
-            </div>
-            <h2 class="text-2xl font-bold text-gradient-gold tracking-widest uppercase font-arabic">جارِ التحميل...</h2>
-        </div>
-
         <!-- Main Content -->
         <div class="relative z-20 pb-24">
             
@@ -691,6 +629,78 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- CSS-Generated Clouds with depth effect - Moved outside scrollable container -->
+    <!-- Cloud 1 - Behind Plane -->
+    <div class="cloud cloud-1">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <!-- Cloud 2 - In Front of Plane -->
+    <div class="cloud cloud-2">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <!-- Cloud 3 - Behind Plane -->
+    <div class="cloud cloud-3">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <!-- Cloud 4 - In Front of Plane -->
+    <div class="cloud cloud-4">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <!-- Cloud 5 - Behind Plane -->
+    <div class="cloud cloud-5">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <!-- Cloud 6 - In Front of Plane -->
+    <div class="cloud cloud-6">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <!-- Cloud 7 - Behind Plane -->
+    <div class="cloud cloud-7">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    
+    <!-- Cloud 8 - In Front of Plane -->
+    <div class="cloud cloud-8">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+    <!-- LEVITATING PLANE - Made bigger and moved up - Moved outside scrollable container -->
+    <img src="https://z-cdn-media.chatglm.cn/files/b8f47e90-fe3f-4648-aa8b-35173bb942eb_Plane.png?auth_key=1864247545-e389d85ea79d4bc89cef42a85926e813-0-dab72277c690cebbfcd874a93f59d2d6" 
+         class="levitating-plane" 
+         alt="Levitating Plane">
+
+    <!-- Loading Screen -->
+    <div id="loader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-navy-950">
+        <div class="relative w-24 h-24 mb-4">
+            <div class="absolute inset-0 border-4 border-gold-500/30 rounded-full"></div>
+            <div class="absolute inset-0 border-4 border-gold-400 border-t-transparent rounded-full animate-spin"></div>
+            <div class="absolute inset-0 flex items-center justify-center text-4xl animate-pulse">✈️</div>
+        </div>
+        <h2 class="text-2xl font-bold text-gradient-gold tracking-widest uppercase font-arabic">جارِ التحميل...</h2>
     </div>
 
     <script>
