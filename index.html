@@ -231,7 +231,7 @@
             width: 120px;
             height: 40px;
             top: 20%;
-            left: -200px;
+            left: -220px;
             animation: cloud-drift-right 15s linear infinite;
         }
 
@@ -250,7 +250,7 @@
             width: 130px;
             height: 45px;
             top: 10%;
-            left: -220px;
+            left: -230px;
             animation: cloud-drift-right 20s linear infinite;
             animation-delay: 4s;
         }
@@ -290,7 +290,7 @@
             width: 140px;
             height: 50px;
             top: 15%;
-            left: -230px;
+            left: -240px;
             animation: cloud-drift-right 22s linear infinite;
             animation-delay: 10s;
         }
@@ -305,21 +305,14 @@
             animation-delay: 12s;
         }
 
-        /* Cloud animations - Faster appearance */
+        /* Cloud animations - FIXED VERSION */
         @keyframes cloud-drift-right {
-            0% { 
-                transform: translateX(-100px); 
-                opacity: 0.4; /* Start immediately visible instead of fading in */
+            0% {
+                transform: translateX(0);
             }
-            5% { 
-                opacity: 0.4; 
-            }
-            95% { 
-                opacity: 0.4; 
-            }
-            100% { 
-                transform: translateX(calc(100vw + 100px)); 
-                opacity: 0.4; /* End immediately visible instead of fading out */
+            100% {
+                /* Move cloud completely off the screen to the right */
+                transform: translateX(calc(100vw + 400px));
             }
         }
 
