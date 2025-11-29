@@ -92,45 +92,6 @@
     </script>
 
     <style>
-        /* iOS-specific fixes - More aggressive approach */
-        @supports (-webkit-touch-callout: none) {
-            html, body {
-                height: 100%;
-                overflow: hidden;
-                position: fixed;
-                width: 100%;
-            }
-            
-            /* Create scrollable container with absolute positioning */
-            #scrollable-container {
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                overflow-y: auto;
-                overflow-x: hidden;
-                -webkit-overflow-scrolling: touch;
-                /* Force hardware acceleration */
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
-                /* Prevent text movement */
-                -webkit-perspective: 1000;
-                perspective: 1000;
-                /* Fix subpixel rendering */
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-            
-            /* Ensure all text elements stay fixed during scroll */
-            h1, h2, h3, h4, p, span, div {
-                -webkit-transform: translateZ(0);
-                transform: translateZ(0);
-                backface-visibility: hidden;
-                -webkit-backface-visibility: hidden;
-            }
-        }
-        
         /* Custom Scrollbar hide */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
@@ -186,7 +147,7 @@
             transition: opacity 0.8s ease-out, visibility 0.8s;
         }
 
-        /* Levitating Plane - Made bigger and moved up - Fixed positioning with iOS fix */
+        /* Levitating Plane - Made bigger and moved up - Fixed positioning */
         .levitating-plane {
             position: fixed;
             top: 25%;
@@ -199,7 +160,7 @@
             animation: smooth-levitate 10s ease-in-out infinite;
         }
 
-        /* CSS Clouds - Different z-index for depth effect - Fixed positioning with iOS fix */
+        /* CSS Clouds - Different z-index for depth effect - Fixed positioning */
         .cloud {
             position: fixed;
             pointer-events: none;
@@ -395,32 +356,47 @@
             100% { transform: translate(-50%, -50%) translateY(0px) rotateZ(0deg) scale(1); }
         }
         
-        /* Reduce animation intensity on mobile for performance */
+        /* MOBILE FIXES: This is the new section to fix the text issues */
         @media (max-width: 768px) {
-            .levitating-plane {
-                width: 250px; /* Adjusted for mobile */
+            /* Add padding to the main container to prevent text from touching screen edges */
+            #scrollable-container {
+                padding: 0 1rem; /* 16px padding on left and right */
+            }
+
+            /* Ensure text elements don't get clipped */
+            h1, h2, h3, h4, p, span, div {
+                /* Remove any transform that might cause clipping on mobile */
+                transform: none !important;
+            }
+
+            /* Adjust card sizes and padding for smaller screens */
+            #tripsContainer {
+                padding: 0 0 1rem 0; /* Only bottom padding */
+            }
+            #tripsContainer .tilt-card {
+                width: calc(100vw - 2rem) !important; /* Full width minus padding */
+                max-width: 350px;
+            }
+            #tripsContainer .tilt-card .absolute.bottom-0 {
+                padding: 1.5rem !important; /* Increase padding inside cards */
             }
             
-            /* Reduce blob animation intensity */
+            /* Adjust other sections for better spacing */
+            nav {
+                padding: 1rem 1rem !important;
+            }
+            header {
+                padding: 0 0 1rem 0 !important;
+            }
+
+            /* Make the plane smaller on mobile */
+            .levitating-plane {
+                width: 250px;
+            }
+
+            /* Reduce animation intensity on mobile for performance */
             .animate-blob {
                 animation-duration: 10s; /* Slower animation */
-            }
-            
-            /* Disable some animations on low-end devices */
-            .shimmer {
-                display: none;
-            }
-        }
-        
-        /* Gold shine animation */
-        @keyframes gold-shine {
-            0%, 100% { 
-                textShadow: 0 0 10px rgba(212, 175, 55, 0.5), 0 0 20px rgba(212, 175, 55, 0.3), 0 0 30px rgba(212, 175, 55, 0.2);
-                transform: scale(1);
-            }
-            50% { 
-                textShadow: 0 0 15px rgba(212, 175, 55, 0.8), 0 0 25px rgba(212, 175, 55, 0.6), 0 0 35px rgba(212, 175, 55, 0.4);
-                transform: scale(1.05);
             }
         }
     </style>
@@ -719,19 +695,10 @@
         }
 
         // --- Horizontal Scrolling Fix - Optimized for iOS ---
-        let currentScrollIndex = 0;
         const scrollContainer = document.getElementById('tripsContainer');
         const scrollIcon = document.getElementById('scrollIcon');
 
         function updateScrollIcon(lang) {
-            // Check if we are at the end of the scroll
-            const maxScroll = scrollContainer.scrollWidth - scrollContainer.clientWidth;
-            // In modern browsers, scrollLeft is 0 at start. RTL handling varies, but scrollBy handles it relatively.
-            
-            // Simple logic: If we are not at the end, show appropriate arrow
-            // For RTL, content starts right. Next items are left.
-            // For LTR, content starts left. Next items are right.
-
             if (lang === 'ar' || lang.startsWith('ku')) {
                 // RTL Mode
                 scrollIcon.className = 'fa-solid fa-arrow-left text-gold-300 text-lg group-active:translate-x-[-4px] transition-transform duration-300';
@@ -940,4 +907,3 @@
     </script>
 </body>
 </html>
-
